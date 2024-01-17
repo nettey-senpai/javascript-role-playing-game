@@ -17,6 +17,24 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
+const weapons = [
+  {
+    name: "stick",
+    power: 5,
+  },
+  {
+    name: "dagger",
+    power: 30,
+  },
+  {
+    name: "claw hammer",
+    power: 50,
+  },
+  {
+    name: "sword",
+    power: 100,
+  },
+];
 const locations = [
   {
     name: "town square",
@@ -71,9 +89,34 @@ function fightDragon() {
   console.log("Fighting dragon.");
 }
 function buyHealth() {
-  gold = gold - 10;
-  health = health + 10;
+  if (gold >= 10) {
+    gold -= 10;
+    health += 10;
+    healthText.innerText = health;
+    goldText.innerText = gold;
+  } else {
+    text.innerText = "You do not have enough gold to buy health.";
+  }
 }
-function buyWeapon() {}
+function buyWeapon() {
+  if (currentWeapon < weapons.length - 1) {
+    if (gold >= 30) {
+      gold -= 30;
+      currentWeapon++;
+      goldText.innerText = gold;
+      let newWeapon = weapons[currentWeapon].name;
+      text.innerText = "You now have a " + newWeapon + ".";
+      inventory.push(newWeapon);
+      text.innerText += " In your inventory you have: " + inventory + ".";
+    } else {
+      text.innerText = "You do not have enough gold to buy a weapon.";
+    }
+  } else {
+    text.innerText = "You already have the most powerful weapon!";
+    button2.innerText = "Sell weapon for 15 gold";
+    button2.onclick = sellWeapon;
+  }
+}
+
 function fightSlime() {}
 function fightBeast() {}
